@@ -1,35 +1,35 @@
-name: Build and Deploy
-on:
-  push:
-    branches:
-      - master
-jobs:
-  build-and-deploy:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout 🛎️
-        uses: actions/checkout@v2.3.1
-        with:
-          persist-credentials: false
+# name: Build and Deploy
+# on:
+#   push:
+#     branches:
+#       - master
+# jobs:
+#   build-and-deploy:
+#     runs-on: ubuntu-latest
+#     steps:
+#       - name: Checkout 🛎️
+#         uses: actions/checkout@v2.3.1
+#         with:
+#           persist-credentials: false
 
-      - name: Install Rust and build wasm
-        run: |
-          curl https://sh.rustup.rs -sSf | sh -s -- --default-toolchain nightly -y
-          export PATH="$HOME/.cargo/bin:$PATH"
-          rustup target add wasm32-unknown-unknown --toolchain nightly
-          cargo install wasm-pack
-          wasm-pack build
+#       - name: Install Rust and build wasm
+#         run: |
+#           curl https://sh.rustup.rs -sSf | sh -s -- --default-toolchain nightly -y
+#           export PATH="$HOME/.cargo/bin:$PATH"
+#           rustup target add wasm32-unknown-unknown --toolchain nightly
+#           cargo install wasm-pack
+#           wasm-pack build
 
-      - name: Install deps and Build
-        run: |
-          cd front
-          npm install
-          npm run build
+#       - name: Install deps and Build
+#         run: |
+#           cd front
+#           npm install
+#           npm run build
   
-      - name: Deploy 🚀
-        uses: JamesIves/github-pages-deploy-action@3.7.1
-        with:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          BRANCH: master # The branch the action should deploy to.
-          FOLDER: front # The folder the action should deploy.
-          CLEAN: true # Automatically remove deleted files from the deploy branch
+#       - name: Deploy 🚀
+#         uses: JamesIves/github-pages-deploy-action@3.7.1
+#         with:
+#           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#           BRANCH: gh-pages # The branch the action should deploy to.
+#           FOLDER: front # The folder the action should deploy.
+#           CLEAN: true # Automatically remove deleted files from the deploy branch
